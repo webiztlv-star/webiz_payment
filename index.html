@@ -4,20 +4,28 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Redirecting to app</title>
+
   <script>
     window.onload = function () {
       const params = new URLSearchParams(window.location.search);
       const result = params.get("result");
       const paymentId = params.get("paymentId");
+
       if (result && paymentId) {
         const schemeHost = "webiz://webiz.com";
-        const path = result === "success" ? "/paymentSuccessScreen" : "/failedPaymentRecovery";
-        window.location.href = `${schemeHost}${path}?payment_id=${encodeURIComponent(paymentId)}`;
-      } else {
-        document.getElementById("status").textContent = "Missing result or payment_id.";
+        const path = result === "success" 
+          ? "/paymentSuccessScreen" 
+          : "/failedPaymentRecovery";
+
+        // UPDATED: Pass the value as AsPackageId instead of payment_id
+        window.location.href = `${schemeHost}${path}?AsPackageId=${encodeURIComponent(paymentId)}`;
+      } 
+      else {
+        document.getElementById("status").textContent = "Missing result or paymentId.";
       }
     };
   </script>
+
   <style>
     body { font-family: Arial, sans-serif; text-align:center; padding:50px;}
     #status { color:#333; }
