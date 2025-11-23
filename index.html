@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Redirecting to app</title>
+  <script>
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      const result = params.get("result");
+      const paymentId = params.get("paymentId");
+      if (result && paymentId) {
+        const schemeHost = "webiz://webiz.com";
+        const path = result === "success" ? "/paymentSuccessScreen" : "/failedPaymentRecovery";
+        window.location.href = `${schemeHost}${path}?payment_id=${encodeURIComponent(paymentId)}`;
+      } else {
+        document.getElementById("status").textContent = "Missing result or payment_id.";
+      }
+    };
+  </script>
+  <style>
+    body { font-family: Arial, sans-serif; text-align:center; padding:50px;}
+    #status { color:#333; }
+  </style>
+</head>
+<body>
+  <h2 id="status">Redirecting into application…</h2>
+</body>
+</html>
